@@ -7,7 +7,7 @@ public class Main {
 
         //format de lecture java –jar labo2-equipeXX.jar <grille> <dictionnaire>
                 
-        motCroise myMotCroise = new motCroise(grille,dictionnaire);
+        MotCroise myMotCroise = new MotCroise(grille,dictionnaire);
         myMotCroise.analyse();
         
 

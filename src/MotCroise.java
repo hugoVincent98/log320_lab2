@@ -3,20 +3,26 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.CacheResponse;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Vector;
 
-public class motCroise {
+
+
+public class MotCroise {
 
     String grilleFile;
     String dictFile;
     char[][] grilleCharactere;
-    List<char[]> dictMot = new ArrayList<char[]>();
+    Tree dictionnaire;
     int n;
 
-    public motCroise(String grilleFile, String dictFile){
+    public MotCroise(String grilleFile, String dictFile){
         this.grilleFile = grilleFile;
         this.dictFile = dictFile;
+        dictionnaire = new Tree();
     }
 
     public void analyse(){
@@ -46,12 +52,12 @@ public class motCroise {
             }
             myReader.close();
 
-            /*for (i = 0; i < n; i++) { 
+            for (i = 0; i < n; i++) { 
                 for (int j = 0; j < n; j++) { 
                     System.out.print(grilleCharactere[i][j] + " "); 
                 }
                 System.out.println();
-            }*/
+            }
 
         }catch (FileNotFoundException e) {
             System.out.println("Un probleme est survenu");
@@ -68,18 +74,12 @@ public class motCroise {
             //permet de passer sur chaque ligne de la grille et de cree un tableau de char qui sera plus facile a travaille avec
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                
-                char[] mot  = new char[data.length()];
-                for(int i = 0; i < data.length(); i++){
-                    mot[i] =data.charAt(i);
-                }
-
-                dictMot.add(mot);
+                dictionnaire.insertWord(data);
                 
             }
             myReader.close();
 
-            /*for(char[] charArray : dictMot){
+            for(char[] charArray : dictMot){
                 
                 //iterate through array using its length
                 for(int i = 0 ; i < charArray.length; i++){
@@ -87,14 +87,20 @@ public class motCroise {
                 }
                 
                 System.out.println();
-            }*/
+            }
 
         }catch (FileNotFoundException e) {
             System.out.println("Un probleme est survenu");
             e.printStackTrace();
         }
 
-    }
-    
+
+
+
+
+        //TODO creer un arbre pour etre capable de reconnaitre des mots
+
+        
+    }    
     
 }
