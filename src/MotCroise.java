@@ -9,6 +9,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Vector;
 
+import jdk.internal.jshell.tool.resources.l10n;
+
 
 
 public class MotCroise {
@@ -80,10 +82,15 @@ public class MotCroise {
             myReader.close();
 
 
-            System.out.println(dictionnaire.getRoot().getData());
-            
-        
-            for(int i = 0 ; i < dictionnaire.toList().size(); i++){
+            LinkedList<Node> treelist = dictionnaire.toList();
+            System.out.println("tree child : ");
+            for(int i = 0 ; i < treelist.size(); i++){
+
+                LinkedList<Node> child = treelist.get(i).getChildrens();
+
+                for(int j = 0 ; j < child.size(); j++){
+                    System.out.println("child: "+ child.get(j).getData());
+                }
 
             }
 
