@@ -5,14 +5,14 @@ import java.util.LinkedList;
 public class Node {
     
     private char data;
-    private LinkedList<Node> children;
+    private LinkedList<Node> childrens;
     private Node parent;
 
     public Node(){
     }
 
     public Node(char data, Node parent){
-        this.children = new LinkedList<>();
+        this.childrens = new LinkedList<>();
         this.data = data;
         this.parent = parent;
     }
@@ -21,7 +21,7 @@ public class Node {
         return this.data;
     }
 
-    public LinkedList<Node> getChildren(){
+    public LinkedList<Node> getChildrens(){
         return this.childrens;
     }
 
@@ -29,21 +29,21 @@ public class Node {
         return this.parent;
     }
 
-    public int getNumberOfChildren(){
-        return childrens.size();
-    }
+    public boolean addChild(Node child){
 
-    public void addChild(Node child){
-        childrensaddFirstd(child);
-    }
+        for(int i=0; i<this.childrens.size(); i++){
 
-    public void insertWord(String word, int charat) {
-        
-        Node directChildren = find(word);
+            if(this.childrens.get(i).getData() == child.getData()){
+                return false;
+            }
+        }
+
+        this.childrens.add(child);
+        return true;
     }
 
     public boolean isLeaf(){
-        if(getNumberOfChildren() == 0)
+        if(this.childrens.size() == 0)
             return true;
         return false;
     }
@@ -63,7 +63,7 @@ public class Node {
                 return found;
             }
         }
-        return null; // Not found.
+        return null;
     }
 }
 

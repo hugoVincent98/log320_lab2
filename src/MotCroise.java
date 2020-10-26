@@ -66,28 +66,28 @@ public class MotCroise {
 
 
 
-        //mettre le fichier grille dans un tableau de char
+        //mettre le fichier dictionnaire dans un tableau de char
         try {
             File myObj = new File(dictFile);
             Scanner myReader = new Scanner(myObj);
+            System.out.println("-------debut de larbre------");
 
             //permet de passer sur chaque ligne de la grille et de cree un tableau de char qui sera plus facile a travaille avec
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 dictionnaire.insertWord(data);
-                
             }
             myReader.close();
 
-            for(char[] charArray : dictMot){
-                
-                //iterate through array using its length
-                for(int i = 0 ; i < charArray.length; i++){
-                    System.out.print( charArray[i]);
-                }
-                
-                System.out.println();
+
+            System.out.println(dictionnaire.getRoot().getData());
+            
+        
+            for(int i = 0 ; i < dictionnaire.toList().size(); i++){
+
             }
+
+
 
         }catch (FileNotFoundException e) {
             System.out.println("Un probleme est survenu");
