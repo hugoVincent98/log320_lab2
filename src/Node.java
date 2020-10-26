@@ -54,13 +54,9 @@ public class Node {
 
 
     public Node find(char data) {
-        if (this.data == data) {
-            return this;
-        }
         for (Node node : childrens) {
-            Node found = node.find(data);
-            if (found != null) {
-                return found;
+            if (node.getData() == data) {
+                return node;
             }
         }
         return null;

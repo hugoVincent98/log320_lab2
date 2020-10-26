@@ -9,7 +9,6 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Vector;
 
-import jdk.internal.jshell.tool.resources.l10n;
 
 
 
@@ -54,12 +53,12 @@ public class MotCroise {
             }
             myReader.close();
 
-            for (i = 0; i < n; i++) { 
+            /*for (i = 0; i < n; i++) { 
                 for (int j = 0; j < n; j++) { 
                     System.out.print(grilleCharactere[i][j] + " "); 
                 }
                 System.out.println();
-            }
+            }*/
 
         }catch (FileNotFoundException e) {
             System.out.println("Un probleme est survenu");
@@ -83,16 +82,7 @@ public class MotCroise {
 
 
             LinkedList<Node> treelist = dictionnaire.toList();
-            System.out.println("tree child : ");
-            for(int i = 0 ; i < treelist.size(); i++){
-
-                LinkedList<Node> child = treelist.get(i).getChildrens();
-
-                for(int j = 0 ; j < child.size(); j++){
-                    System.out.println("child: "+ child.get(j).getData());
-                }
-
-            }
+            this.LevelOrderTraversal(treelist.getFirst());
 
 
 
@@ -105,9 +95,51 @@ public class MotCroise {
 
 
 
+
         //TODO creer un arbre pour etre capable de reconnaitre des mots
 
         
     }    
     
+
+
+
+
+
+
+    static void LevelOrderTraversal(Node root) { 
+    if (root == null) 
+        return; 
+  
+    // Standard level order traversal code 
+    // using queue 
+    Queue<Node > q = new LinkedList<>(); // Create a queue 
+    q.add(root); // Enqueue root  
+    while (!q.isEmpty()) 
+    { 
+        int n = q.size(); 
+  
+        // If this node has children 
+        while (n > 0) 
+        { 
+            // Dequeue an item from queue 
+            // and print it 
+            Node p = q.peek(); 
+            q.remove(); 
+            System.out.print(p.getData() + " "); 
+  
+            // Enqueue all children of  
+            // the dequeued item 
+            for (int i = 0; i < p.getChildrens().size(); i++){
+                q.add(p.getChildrens().get(i)); 
+
+            }
+            n--;
+        } 
+          
+        // Print new line between two levels 
+        System.out.println();  
+    } 
+} 
+
 }

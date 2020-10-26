@@ -6,7 +6,7 @@ public class Tree {
 
    // Default constructor
    public Tree() {
-      this.root = new Node('1', null);
+      this.root = new Node('0', null);
    }
 
    // Returns the root
@@ -50,13 +50,14 @@ public class Tree {
    //Permet dinserer un mot dans l'arbre
    public void insertWord(String word){
       char[] myWord = new char[word.length()];
+      System.out.println("the word is: "+ word);
 
       char firstChar = word.charAt(0);
       //cherche si un enfant contient le first char et retourne le node(null si ne trouve pas de noeud)
       Node firstNode = root.find(firstChar);
 
       if(firstNode == null){
-         System.out.println(firstChar+ "nest pas encore dans l'arbre a ce niveau");
+         System.out.println(firstChar+ " n'est pas encore dans le premier niveau");
          firstNode = new Node(firstChar,root);
          root.addChild(firstNode);
       }
@@ -68,18 +69,21 @@ public class Tree {
          myWord[i] = word.charAt(i);
 
          //si le charactere n'est pas un enfant de previous node 
-         if(previousNode.find(myWord[i]) == null){
-            System.out.println(myWord[i]+ "nest pas encore dans l'arbre a ce niveau");
+         if(previousNode.find(myWord[i]) == null || myWord[i-1] == myWord[i]){
+            System.out.println(myWord[i]+" added");
 
             myNode = new Node(myWord[i], previousNode);
             previousNode.addChild(myNode);
-         }
 
-         System.out.print(myWord[i]+" ");
+         }else if(previousNode.find(myWord[i]) != null){
+            System.out.println(myWord[i]+" already there");
+            myNode = previousNode.find(myWord[i]);
+         }
          previousNode = myNode;
      }
 
-     System.out.println(myWord.toString());
+     previousNode.addChild(new Node('1', previousNode));
+     System.out.println("1 added at the end");
    }
 
 }
