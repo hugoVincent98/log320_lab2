@@ -1,6 +1,5 @@
-import java.lang.reflect.Array;
-import java.awt.datatransfer.*;
-import java.util.LinkedList;
+
+import java.util.*;
 import java.util.Queue;
 
 public class Node {
@@ -25,7 +24,7 @@ public class Node {
         return this.data;
     }
 
-    public LinkedList<Node> getChildrens(){
+    public List<Node> getChildrens(){
         return this.childrens;
     }
 
@@ -47,9 +46,7 @@ public class Node {
     }
 
     public boolean isLeaf(){
-        if(this.childrens.size() == 0)
-            return true;
-        return false;
+        return(this.childrens.isEmpty());
     }
 
     public boolean isRoot(){

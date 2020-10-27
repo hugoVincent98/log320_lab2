@@ -1,5 +1,5 @@
 import java.util.LinkedList;
-import java.util.PriorityQueue;
+import java.util.List;
 import java.util.Queue;
 
 
@@ -17,8 +17,8 @@ public class Tree {
    }
 
    // Returns the Tree<T> as a List of Node<T> objects
-   public LinkedList<Node> toList() {
-      LinkedList<Node> list = new LinkedList<Node>();
+   public List<Node> toList() {
+      LinkedList<Node> list = new LinkedList<>();
       walk(root, list);
       return list;
    }
