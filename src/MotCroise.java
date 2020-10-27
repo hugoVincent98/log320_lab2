@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.CacheResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -53,15 +54,9 @@ public class MotCroise {
             }
             myReader.close();
 
-            /*for (i = 0; i < n; i++) { 
-                for (int j = 0; j < n; j++) { 
-                    System.out.print(grilleCharactere[i][j] + " "); 
-                }
-                System.out.println();
-            }*/
 
         }catch (FileNotFoundException e) {
-            System.out.println("Un probleme est survenu");
+            System.out.println(String.format("Le fichier %0 n'a pas été trouvé", grilleFile));
             e.printStackTrace();
         }
 
@@ -79,41 +74,106 @@ public class MotCroise {
                 dictionnaire.insertWord(data);
             }
             myReader.close();
-
+            
 
             LinkedList<Node> treelist = dictionnaire.toList();
-            this.LevelOrderTraversal(treelist.getFirst());
+            this.levelOrderTraversal(treelist.getFirst());
 
-
+            
 
         }catch (FileNotFoundException e) {
-            System.out.println("Un probleme est survenu");
+            System.out.println(String.format("Le fichier %0 n'a pas été trouvé", dictFile));
             e.printStackTrace();
         }
 
+        // debut algorithme
 
-
-
-
-
-        //TODO creer un arbre pour etre capable de reconnaitre des mots
+        trouverMot();
+        
 
         
     }    
     
 
+    public int trouverMot(){
+        int compteur = 0;
+        for(int i = 0; i < n ; i++){
+            for (int j = 0; j < n ; j++){  // pour chaque char
+             
+            char maLettre = grilleCharactere[i][j];
+
+            // lire de gauche a droite
+            char[] maListeChar = new char[n-j];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i][j+k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+
+            //lire de droite a gauche
+            maListeChar = new char[j+1];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i][j-k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+
+            // lire haut en bas
+            maListeChar = new char[n-i];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i+k][j];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+
+            //lire de bas en haut
+            maListeChar = new char[i+1];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i-k][j];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+
+            // lire ↗
+            maListeChar = new char[Math.min(i+1,n-j)];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i-k][j+k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+            
+            // lire ↘
+            maListeChar = new char[Math.min(n-i,n-j)];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i+k][j+k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
 
 
 
+            // lire ↖       
+            maListeChar = new char[Math.min(i+1,j+1)];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i-k][j-k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
 
 
-    static void LevelOrderTraversal(Node root) { 
+            // lire ↙
+            maListeChar = new char[Math.min(n-i,j+1)];
+            for(int k = 0 ; k < maListeChar.length ; k++){
+                maListeChar[k] = grilleCharactere[i+k][j-k];
+            }
+            compteur += dictionnaire.compterMot(maListeChar);
+            }
+        }
+        System.out.println(compteur);
+        return 0;
+    }
+
+
+    static void levelOrderTraversal(Node root) { 
     if (root == null) 
         return; 
   
     // Standard level order traversal code 
     // using queue 
-    Queue<Node > q = new LinkedList<>(); // Create a queue 
+    Queue<Node> q = new LinkedList<>(); // Create a queue 
     q.add(root); // Enqueue root  
     while (!q.isEmpty()) 
     { 
@@ -124,8 +184,7 @@ public class MotCroise {
         { 
             // Dequeue an item from queue 
             // and print it 
-            Node p = q.peek(); 
-            q.remove(); 
+            Node p = q.remove();
             System.out.print(p.getData() + " "); 
   
             // Enqueue all children of  

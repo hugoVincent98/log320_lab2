@@ -7,6 +7,7 @@ public class Node {
     private char data;
     private LinkedList<Node> childrens;
     private Node parent;
+    private boolean endofword;
 
     public Node(){
     }
@@ -17,6 +18,8 @@ public class Node {
         this.parent = parent;
     }
 
+    
+    
     public char getData(){
         return this.data;
     }
@@ -53,13 +56,49 @@ public class Node {
     }
 
 
-    public Node find(char data) {
+    public Node findChild(char data) {
         for (Node node : childrens) {
             if (node.getData() == data) {
                 return node;
             }
         }
         return null;
+    }
+
+
+    public boolean isWord() {
+        return endofword;
+    }
+
+	public void isWord(boolean b) {
+        this.endofword = b;
+    }
+    
+    public int compterMot(char[] mot, int recurrence, int compteur, StringBuilder ss) {
+        
+        // vérifie si on a compléter le mot
+        if (this.isWord()) {
+            System.out.println("mot " + ss);
+            recurrence = recurrence +1;
+        }
+            
+        
+        if (mot.length == compteur) {
+            ss.delete(0, ss.length());
+            return recurrence;
+        }
+            
+
+        Node n = findChild(mot[compteur]);
+
+        if (n == null) {
+            ss.delete(0, ss.length());
+            return recurrence;
+        } 
+        ss.append(mot[compteur]);
+        return n.compterMot(mot, recurrence, compteur+1,ss);
+
+
     }
 }
 

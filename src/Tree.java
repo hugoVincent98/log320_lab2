@@ -35,7 +35,7 @@ public class Tree {
    }
 
    public Node find(char data) {
-      return root == null ? null : root.find(data);
+      return root == null ? null : root.findChild(data);
    }
  
    public boolean insert(char parentData, char data) {
@@ -50,14 +50,14 @@ public class Tree {
    //Permet dinserer un mot dans l'arbre
    public void insertWord(String word){
       char[] myWord = new char[word.length()];
-      System.out.println("the word is: "+ word);
+      //System.out.println("the word is: "+ word);
 
       char firstChar = word.charAt(0);
       //cherche si un enfant contient le first char et retourne le node(null si ne trouve pas de noeud)
-      Node firstNode = root.find(firstChar);
+      Node firstNode = root.findChild(firstChar);
 
       if(firstNode == null){
-         System.out.println(firstChar+ " n'est pas encore dans le premier niveau");
+         //System.out.println(firstChar+ " n'est pas encore dans le premier niveau");
          firstNode = new Node(firstChar,root);
          root.addChild(firstNode);
       }
@@ -69,21 +69,25 @@ public class Tree {
          myWord[i] = word.charAt(i);
 
          //si le charactere n'est pas un enfant de previous node 
-         if(previousNode.find(myWord[i]) == null || myWord[i-1] == myWord[i]){
-            System.out.println(myWord[i]+" added");
+         if(previousNode.findChild(myWord[i]) == null || myWord[i-1] == myWord[i]){
+            //System.out.println(myWord[i]+" added");
 
             myNode = new Node(myWord[i], previousNode);
             previousNode.addChild(myNode);
 
-         }else if(previousNode.find(myWord[i]) != null){
-            System.out.println(myWord[i]+" already there");
-            myNode = previousNode.find(myWord[i]);
+         }else if(previousNode.findChild(myWord[i]) != null){
+            //System.out.println(myWord[i]+" already there");
+            myNode = previousNode.findChild(myWord[i]);
          }
          previousNode = myNode;
      }
+     previousNode.isWord(true);
+    
+    
+   }
 
-     previousNode.addChild(new Node('1', previousNode));
-     System.out.println("1 added at the end");
+   public int compterMot(char[] mot) {
+      return root.compterMot(mot, 0,0, new StringBuilder());
    }
 
 }
