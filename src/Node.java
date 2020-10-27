@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.awt.datatransfer.*;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class Node {
     
@@ -74,11 +75,11 @@ public class Node {
         this.endofword = b;
     }
     
-    public int compterMot(char[] mot, int recurrence, int compteur, StringBuilder ss) {
+    public int compterMot(char[] mot, int recurrence, int compteur, StringBuilder ss, Queue<String> mots) {
         
         // vérifie si on a compléter le mot
         if (this.isWord()) {
-            System.out.println("mot " + ss);
+            mots.add(ss.toString());
             recurrence = recurrence +1;
         }
             
@@ -96,7 +97,7 @@ public class Node {
             return recurrence;
         } 
         ss.append(mot[compteur]);
-        return n.compterMot(mot, recurrence, compteur+1,ss);
+        return n.compterMot(mot, recurrence, compteur+1,ss,mots);
 
 
     }

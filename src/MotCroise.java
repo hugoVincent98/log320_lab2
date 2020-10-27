@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Vector;
 
 
 
@@ -60,8 +60,6 @@ public class MotCroise {
             e.printStackTrace();
         }
 
-
-
         //mettre le fichier dictionnaire dans un tableau de char
         try {
             File myObj = new File(dictFile);
@@ -74,12 +72,6 @@ public class MotCroise {
                 dictionnaire.insertWord(data);
             }
             myReader.close();
-            
-
-            LinkedList<Node> treelist = dictionnaire.toList();
-            this.levelOrderTraversal(treelist.getFirst());
-
-            
 
         }catch (FileNotFoundException e) {
             System.out.println(String.format("Le fichier %0 n'a pas été trouvé", dictFile));
@@ -95,7 +87,9 @@ public class MotCroise {
     }    
     
 
-    public int trouverMot(){
+    public void trouverMot(){
+
+        Queue<String> mots = new PriorityQueue<>();
         int compteur = 0;
         for(int i = 0; i < n ; i++){
             for (int j = 0; j < n ; j++){  // pour chaque char
@@ -107,42 +101,42 @@ public class MotCroise {
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i][j+k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
             //lire de droite a gauche
             maListeChar = new char[j+1];
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i][j-k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
             // lire haut en bas
             maListeChar = new char[n-i];
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i+k][j];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
             //lire de bas en haut
             maListeChar = new char[i+1];
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i-k][j];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
             // lire ↗
             maListeChar = new char[Math.min(i+1,n-j)];
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i-k][j+k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
             
             // lire ↘
             maListeChar = new char[Math.min(n-i,n-j)];
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i+k][j+k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
 
 
@@ -151,7 +145,7 @@ public class MotCroise {
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i-k][j-k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
 
 
             // lire ↙
@@ -159,11 +153,16 @@ public class MotCroise {
             for(int k = 0 ; k < maListeChar.length ; k++){
                 maListeChar[k] = grilleCharactere[i+k][j-k];
             }
-            compteur += dictionnaire.compterMot(maListeChar);
+            compteur += dictionnaire.compterMot(maListeChar,mots);
             }
         }
+
+        // PRINT OUT
+        while (!mots.isEmpty()) {
+            System.out.println(mots.poll());
+         }
+
         System.out.println(compteur);
-        return 0;
     }
 
 

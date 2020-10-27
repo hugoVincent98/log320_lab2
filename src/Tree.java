@@ -1,4 +1,6 @@
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 
 public class Tree {
@@ -86,8 +88,9 @@ public class Tree {
     
    }
 
-   public int compterMot(char[] mot) {
-      return root.compterMot(mot, 0,0, new StringBuilder());
+   public int compterMot(char[] mot, Queue<String> mots) {
+      
+      return root.compterMot(mot, 0,0,new StringBuilder(), mots);
    }
 
 }
