@@ -1,1 +1,1 @@
-# log320_lab2
+# Recherche de mots dans une grille de lettres
